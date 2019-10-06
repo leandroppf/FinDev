@@ -46,7 +46,7 @@ DevSchema.pre('save', async function (next) {
         next()
     }
 
-    this.password = await bcrypt.hash(this.password, 8, this.email)
+    this.password = await bcrypt.hash(this.password, 8, this.email);
 });
 
 DevSchema.methods = {
