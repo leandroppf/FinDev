@@ -81,5 +81,25 @@ module.exports = {
                 msg: 'Usuário não encontrado.'
             })
         }
+    },
+
+    async auth(req, res){
+        const { user, password } = req.body;
+
+        const account = await Dev.findOne({ user })
+
+        if(!user){
+            return res.status(400).json({
+                error: "Usuário não encontrado."
+            })
+        }
+
+        if(!(await account.compareHash(password))){
+            return res.status(400).json({
+                error: "Senha incorreta."
+            })
+        }
+
+        return res.json({ account, token: Dev.generateToken(account) })
     }
 };
