@@ -5,10 +5,9 @@ Primeiro passo, abra o terminal e digite <b>yarn</b> para carregar as dependênc
   <br/>Obs.: A pasta node_modules será criada com as dependências.
 
 <b>IMPORTANTE</b><br/>
-No projeto foi utilizada a criptografia bcrypt, com algumas modificações nas funções hash e compareSync. Para funcionar corretamente, 
-abra o arquivo node_modules/bcryptjs/dist/bcrypt.js e em seguida:
-    
-   Substitua a função hash por:
+No projeto foi utilizada a criptografia bcrypt, com algumas modificações nas funções hash e compareSync. 
+
+  A função hash foi modificada para:
     
      /**
      * Asynchronously generates a hash for the given string.
@@ -56,7 +55,7 @@ abra o arquivo node_modules/bcryptjs/dist/bcrypt.js e em seguida:
             });
     };
    
-   Em seguida substitua a função compareSync por:
+   E a função compareSync foi modificada para:
    
     /**
      * Synchronously tests a string against a hash.
@@ -80,13 +79,3 @@ abra o arquivo node_modules/bcryptjs/dist/bcrypt.js e em seguida:
             return false;
         return safeStringCompare(bcrypt.hashSync(s, hash.substr(0, hash.length-31)), hash);
     };
-   
-<b>OU Se quiser utilizar a bcrypt como é criada, siga os passos abaixo:</b>
-  
-  Abra o aquivo src/app/models/Dev.js
-  
-   Substitua a linha 49 por:<br/> 
-        <b>this.password = await bcrypt.hash(this.password, 8);</b>
-      
-   E a linha 54 por:<br/>
-        <b>return bcrypt.compareSync(password, this.password);</b>
