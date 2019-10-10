@@ -51,7 +51,6 @@ DevSchema.pre('save', async function (next) {
 
 DevSchema.methods = {
     compareHash(password){
-        console.log(this.email)
         return bcrypt.compareSync(password, this.password, this.email);
     }
 }
