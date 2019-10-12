@@ -37,6 +37,10 @@ const DevSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Dev',
     }],
+    matchs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Dev',
+    }],
 }, {
     timestamps: true
 });

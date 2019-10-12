@@ -37,11 +37,39 @@ module.exports = {
 
         if(targetDev.likes.includes(loggedDev._id)){
             console.log('Deu MATCH!')
+            loggedDev.matchs.push(targetDev._id);
+            targetDev.matchs.push(loggedDev._id);
         }
 
         loggedDev.likes.push(targetDev._id);
 
         await loggedDev.save();
+        await targetDev.save();
+
+        return res.json(loggedDev);
+    },
+
+    async delete(req, res){
+        const { user } = req.headers;
+        const { devId } = req.params;
+
+        const loggedDev = await Dev.findById(user);
+        const targetDev = await Dev.findById(devId);
+
+        if(!targetDev){
+            return res.status(400).json({
+                error: 'Usuário inesistente.'
+            });
+        }
+
+        
+        loggedDev.matchs.remove(targetDev._id);
+        targetDev.matchs.remove(loggedDev._id);       
+        
+        loggedDev.likes.remove(targetDev._id);
+
+        await loggedDev.save();
+        await targetDev.save();
 
         return res.json(loggedDev);
     }

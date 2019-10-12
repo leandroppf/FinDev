@@ -101,5 +101,26 @@ module.exports = {
         }
 
         return res.json({ account, token: Dev.generateToken(account) })
+    },
+
+    async getMatchs(req, res){
+        const { user } = req.headers;
+
+        const loggedDev = await Dev.findById(user);
+
+        if(!loggedDev){
+            return res.status(400).json({
+                error: 'Usuário inexistente.'
+            });
+        }
+
+        const users = await Dev.find({
+            $and: [
+                { _id: { $ne: user } },
+                { _id: { $in: loggedDev.matchs } },
+            ],
+        });
+
+        return res.json(users);
     }
 };
