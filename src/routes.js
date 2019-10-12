@@ -6,7 +6,7 @@ const routes = express.Router();
 
 //CADASTRO
 routes.post('/register', controllers.DevController.store);
-routes.get('/password', controllers.DevController.comparePass);
+routes.put('/password', controllers.DevController.changePass);
 routes.post('/auth', controllers.DevController.auth)
 
 routes.use(authMiddleware);
