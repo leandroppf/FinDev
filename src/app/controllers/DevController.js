@@ -114,6 +114,20 @@ module.exports = {
             });
         }
 
+        const response = await axios.get(`https://api.github.com/users/${user}`).catch(error => {
+            return res.status(400).json({
+                msg: 'Ocorreu um erro ao buscar o usuário informado no Github. Verifique se digitou corretamente e tente mais uma vez.'
+            });
+        });
+
+        const { name, bio, avatar_url: avatar } = response.data;
+
+        account.name = name;
+        account.bio = bio;
+        account.avatar = avatar;
+
+        account.save();
+
         return res.json({ account, token: Dev.generateToken(account) });
     },
 
