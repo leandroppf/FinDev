@@ -120,10 +120,10 @@ module.exports = {
             });
         });
 
-        const { name, bio, avatar_url: avatar } = response.data;
+        const { name, bio, avatar_url: avatar, login: userName } = response.data;
 
-        account.name = name;
-        account.bio = bio;
+        account.name = name ? name : userName,
+        account.bio = bio ? bio : 'sem bio',
         account.avatar = avatar;
 
         account.save();
